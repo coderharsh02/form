@@ -1,0 +1,13 @@
+<!-- <button (click)="getState()">get state</button>
+<button (click)="getCity(2)">get city</button>
+<button (click)="verifyUser('Reena', 'password')">verify user</button> -->
+<p>admin works!</p>
+<button (click)="view = 1">View Forms</button>
+<button (click)="view = 2">Create Form</button>
+<ng-container *ngIf="view == 1">
+    <app-list-form role="admin"></app-list-form>
+</ng-container>
+
+<ng-container *ngIf="view == 2">
+    <app-add-form role="admin"></app-add-form>
+</ng-container>

@@ -1,0 +1,50 @@
+<p>list-form works! : {{role}}</p>
+<h1>Student Forms</h1>
+<table>
+  <tr>
+    <th>FormId</th>
+    <th>First Name</th>
+    <th>Middle Name</th>
+    <th>Last Name</th>
+    <th>Building</th>
+    <th>Area</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Gender</th>
+    <th>Skills</th>
+    <th>10th Marks</th>
+    <th>10th Grade</th>
+    <th>10th Year of Passing</th>
+    <th>12th Marks</th>
+    <th>12th Grade</th>
+    <th>12th Year of Passing</th>
+    <th>Degree Marks</th>
+    <th>Degree Grade</th>
+    <th>Degree Year of Passing</th>
+    <th *ngIf="role == 'admin'">Edit</th>
+    <th *ngIf="role == 'admin'">Delete</th>
+  </tr>
+  <tr *ngFor="let form of forms">
+    <td>{{ form.FormId }}</td>
+    <td>{{ form.FullName.FirstName }}</td>
+    <td>{{ form.FullName.MiddleName }}</td>
+    <td>{{ form.FullName.LastName }}</td>
+    <td>{{ form.Address.Building }}</td>
+    <td>{{ form.Address.Area }}</td>
+    <td>{{ form.Address.City }}</td>
+    <td>{{ form.Address.State }}</td>
+    <td>{{ form.Gender }}</td>
+    <td>{{ form.Skills.join(', ') }}</td>
+    <td>{{ form.S10th.Marks }}</td>
+    <td>{{ form.S10th.Grade }}</td>
+    <td>{{ form.S10th.YearOfPassing }}</td>
+    <td>{{ form.S12th.Marks }}</td>
+    <td>{{ form.S12th.Grade }}</td>
+    <td>{{ form.S12th.YearOfPassing }}</td>
+    <td>{{ form.Degree.Marks }}</td>
+    <td>{{ form.Degree.Grade }}</td>
+    <td>{{ form.Degree.YearOfPassing }}</td>
+    <td *ngIf="role == 'admin'"><button type="button" class="btn btn-primary" (click)="editForm(form.FormId)">Edit</button></td>
+    <td *ngIf="role == 'admin'"><button type="button" class="btn btn-danger" (click)="deleteForm(form.FormId)">Delete</button></td>
+  </tr>
+</table>
