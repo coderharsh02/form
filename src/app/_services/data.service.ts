@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { State } from '../_interfaces/State';
 import { City } from '../_interfaces/City';
 import { User } from '../_interfaces/User';
-import { map } from 'rxjs';
+import { map, take } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +20,7 @@ export class DataService {
         this.Cities = data.Cities;
         this.Users = data.users;
       }
-    }); 
+    });
   }
 
   findStates() {
@@ -34,7 +34,7 @@ export class DataService {
   findCityByID(id: number) {
     return this.http.get<any>('./assets/data.json').pipe(
       map((res) => {
-        return res.Cities.filter((x:any) => x.StateID == id);
+        return res.Cities.filter((x: any) => x.StateID == id);
       })
     );
   }
@@ -42,4 +42,10 @@ export class DataService {
   verifyuser(email: string, password: string) {
     return this.Users.find(x => x.userName == email && x.password == password);
   }
+
+  getCityAndStateByID(StateID: number, CityID: number) {
+    let state = this.States.find((x: any) => x.StateID == StateID)?.StateName;
+    let city = this.Cities.find((x: any) => (x.CityID == CityID))?.Name;
+    return { city, state };
+  };
 }

@@ -13,11 +13,12 @@ export class FormService {
         MiddleName: "Doe",
         LastName: "Smith",
       },
+      EmailID: "xyz@1",
       Address: {
         Building: "A-1",
         Area: "B-2",
-        City: 1,
-        State: 1
+        City: 4,
+        State: 2
       },
       Gender: "Male",
       Skills: ["C#", "Angular", "SQL"],
@@ -44,6 +45,7 @@ export class FormService {
         MiddleName: "Smith",
         LastName: "Doe",
       },
+      EmailID: "xyz@12",
       Address: {
         Building: "B-3",
         Area: "C-4",
@@ -75,6 +77,7 @@ export class FormService {
         MiddleName: "Brown",
         LastName: "Johnson",
       },
+      EmailID: "xyz@123",
       Address: {
         Building: "C-5",
         Area: "D-6",
@@ -106,10 +109,11 @@ export class FormService {
         MiddleName: "Davis",
         LastName: "Taylor",
       },
+      EmailID: "xyz@1234",
       Address: {
         Building: "D-7",
         Area: "E-8",
-        City: 1,
+        City: 4,
         State: 1
       },
       Gender: "Female",
@@ -139,7 +143,8 @@ export class FormService {
   }
 
   editForm(formId: number, form: Student) {
-    
+    const index = this.forms.findIndex(x => x.FormId === formId);
+    this.forms[index] = form;
   }
 
   deleteForm(formId: number) {

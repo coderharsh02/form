@@ -2,6 +2,10 @@
   <h2>Application Form</h2>
 
   <form [formGroup]="ApplicationForm">
+
+    <label>Form Id</label>
+    <input type="number" formControlName="FormId" class="form-control">
+
     <div class="form-group" formGroupName="FullName">
       <!-- <label>First Name</label>
       <input type="text" [class.is-invalid]="firstName?.invalid && firstName?.touched" formControlName="firstName" class="form-control">
@@ -12,9 +16,8 @@
         <small class="text-danger" *ngIf="firstName?.errors?.['forbiddenName']">'{{firstName?.errors?.['forbiddenName'].value}}' username not allowed</small>
       </div>
     </div> -->
-    
-    <!-- <input type="text" formControlName="formId" class="form-control"> -->
 
+     
       <label>First Name</label>
       <input type="text" formControlName="FirstName" class="form-control">
 
@@ -28,9 +31,8 @@
 
     <div class="form-group">
       <label>Email Id</label>
-      <input type="email" formControlName="EmaiID" class="form-control">
+      <input type="email" formControlName="EmailID" class="form-control">
     </div>
-
 
     <div class="form-group" formGroupName="Address">
       <label>Building</label>
@@ -41,18 +43,24 @@
 
       <label>State</label>
       <select formControlName="State" class="form-control">  
+        <option value="-1">None</option>  
         <option *ngFor="let state of states" value="{{state.StateID}}">{{state.StateName}}</option>  
       </select>  
 
       <label>City</label>
       <select formControlName="City" class="form-control">  
-        <option *ngFor="let city of cities">{{city.Name}}</option>  
+        <option value="-1">None</option>  
+        <option *ngFor="let city of cities" value="{{city.CityID}}">{{city.Name}}</option>  
       </select>  
     </div>
 
     <div class="form-group">
-      <input type="radio" formControlName="Gender" value="male" > Male
-      <input type="radio" formControlName="Gender" value="female"> Female
+      <label>Gender</label> <br>
+      <input type="radio" id="maleRadioBtn" formControlName="Gender" value="Male" > 
+      <label for="maleRadioBtn">Male</label> <br>
+      <input type="radio" id="femaleRadioBtn" formControlName="Gender" value="Female"> 
+      <label for="femaleRadioBtn">Female</label>
+
     </div>
 
     <div class="form-group">
@@ -99,11 +107,11 @@
       <input type="number" formControlName="YearOfPassing" class="form-control"> 
     </div>
 
-    <ng-template [ngIf]="isNewForm" [ngIfElse]="oldForm">
+    <ng-template [ngIf]="FormId == -1" [ngIfElse]="oldForm">
       <button class="btn btn-primary" type="button" (click)="onSubmit(ApplicationForm.getRawValue())">Register</button>
     </ng-template>
     <ng-template #oldForm>
-      <button class="btn btn-primary" type="button" (click)="saveChanges(ApplicationForm.getRawValue())">Register</button>
+      <button class="btn btn-primary" type="button" (click)="saveChanges(ApplicationForm.getRawValue())">Save</button>
     </ng-template>
     
 
