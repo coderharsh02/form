@@ -6,7 +6,7 @@ import {
   MinLengthValidator,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { City } from 'src/app/_interfaces/City';
 import { State } from 'src/app/_interfaces/State';
 import { Student } from 'src/app/_interfaces/Student';
@@ -30,7 +30,8 @@ export class AddFormComponent implements OnInit {
     private fb: FormBuilder,
     private formService: FormService,
     private dataService: DataService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ApplicationForm!: FormGroup;
@@ -107,9 +108,24 @@ export class AddFormComponent implements OnInit {
     return this.ApplicationForm.get('Skills') as FormArray;
   }
 
+  get fullName() {
+    return (this.gender?.value == "Male" ? "Mr. " : "Ms. ") + this.firstName?.value + ' ' + this.middleName?.value + ' ' + this.lastName?.value;
+  }
 
   get firstName() {
-    return this.ApplicationForm.get('fullName.firstName');
+    return this.ApplicationForm.get('FullName.FirstName');
+  }
+
+  get middleName() {
+    return this.ApplicationForm.get('FullName.MiddleName');
+  }
+
+  get lastName() {
+    return this.ApplicationForm.get('FullName.LastName');
+  }
+
+  get gender() {
+    return this.ApplicationForm.get('Gender');
   }
 
   get city() {
@@ -127,10 +143,12 @@ export class AddFormComponent implements OnInit {
   onSubmit(x: Student) {
     console.log(this.ApplicationForm.value);
     this.formService.addForm(x);
+    this.router.navigateByUrl(`/${this.role}`);
   }
 
   saveChanges(x: Student) {
     this.formService.editForm(this.FormId, x);
+    this.router.navigateByUrl(`/${this.role}`);
   }
 
   loadAPIData(formId: number) {
