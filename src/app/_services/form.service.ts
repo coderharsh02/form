@@ -138,7 +138,7 @@ export class FormService {
     this.forms.push(form);
   }
 
-  editForm(formId: number) {
+  editForm(formId: number, form: Student) {
     
   }
 

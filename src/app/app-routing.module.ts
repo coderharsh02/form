@@ -9,7 +9,7 @@ import { AddFormComponent } from './application/add-form/add-form.component';
 
 const routes: Routes = [
   {
-    path: '', component: AddFormComponent
+    path: '', component: LoginComponent
   },
   {
     path: 'admin', component: AdminComponent,

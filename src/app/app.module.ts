@@ -8,7 +8,6 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StaffComponent } from './staff/staff.component';
 import { AddFormComponent } from './application/add-form/add-form.component';
-import { EditFormComponent } from './application/edit-form/edit-form.component';
 import { ListFormComponent } from './application/list-form/list-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
@@ -18,7 +17,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoginComponent,
     StaffComponent,
     AddFormComponent,
-    EditFormComponent,
     ListFormComponent
   ],
   imports: [

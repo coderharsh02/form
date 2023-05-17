@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <h2>Application Form</h2>
 
-  <form [formGroup]="ApplicationForm" (ngSubmit)="onSubmit(ApplicationForm.getRawValue())">
+  <form [formGroup]="ApplicationForm">
     <div class="form-group" formGroupName="FullName">
       <!-- <label>First Name</label>
       <input type="text" [class.is-invalid]="firstName?.invalid && firstName?.touched" formControlName="firstName" class="form-control">
@@ -98,8 +98,16 @@
       <label>Year Of Passing</label>
       <input type="number" formControlName="YearOfPassing" class="form-control"> 
     </div>
-    <button class="btn btn-primary" type="submit">Register</button>
-    <button type="button" class="btn btn-primary" (click)="loadAPIData(0)">Set Data</button>
+
+    <ng-template [ngIf]="isNewForm" [ngIfElse]="oldForm">
+      <button class="btn btn-primary" type="button" (click)="onSubmit(ApplicationForm.getRawValue())">Register</button>
+    </ng-template>
+    <ng-template #oldForm>
+      <button class="btn btn-primary" type="button" (click)="saveChanges(ApplicationForm.getRawValue())">Register</button>
+    </ng-template>
+    
+
+    <button #loggedOut type="button" class="btn btn-primary" (click)="loadAPIData(0)">Set Data</button>
     {{ApplicationForm.status | json}}
     {{ApplicationForm.value | json}}
   </form>

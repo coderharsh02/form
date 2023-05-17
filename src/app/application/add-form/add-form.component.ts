@@ -21,9 +21,12 @@ import { FormService } from 'src/app/_services/form.service';
 export class AddFormComponent implements OnInit {
   @Input() role = '';
 
+  FormId: number = -1;
+
   states: State[] = [];
   cities: City[] = [];
 
+  isNewForm: Boolean = true;
   constructor(
     private fb: FormBuilder,
     private formService: FormService,
@@ -75,6 +78,8 @@ export class AddFormComponent implements OnInit {
 
     let formId = parseInt(this.route.snapshot.paramMap.get('formId') || '-1');
     if (formId != -1) {
+      this.FormId = formId;
+      this.isNewForm = false;
       this.loadAPIData(formId);
     }
 
@@ -107,6 +112,10 @@ export class AddFormComponent implements OnInit {
   onSubmit(x: Student) {
     console.log(this.ApplicationForm.value);
     this.formService.addForm(x);
+  }
+
+  saveChanges(x: Student) {
+    this.formService.editForm(this.FormId, x);
   }
 
   loadAPIData(formId: number) {
