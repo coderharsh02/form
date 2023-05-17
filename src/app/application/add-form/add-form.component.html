@@ -41,12 +41,12 @@
 
       <label>State</label>
       <select formControlName="State" class="form-control">  
-        <option *ngFor="let state of states">{{state}}</option>  
+        <option *ngFor="let state of states" value="{{state.StateID}}">{{state.StateName}}</option>  
       </select>  
 
       <label>City</label>
       <select formControlName="City" class="form-control">  
-        <option *ngFor="let city of cities">{{city}}</option>  
+        <option *ngFor="let city of cities">{{city.Name}}</option>  
       </select>  
     </div>
 

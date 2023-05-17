@@ -1,15 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, MinLengthValidator, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  MinLengthValidator,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { City } from 'src/app/_interfaces/City';
 import { State } from 'src/app/_interfaces/State';
 import { Student } from 'src/app/_interfaces/Student';
+import { DataService } from 'src/app/_services/data.service';
 import { FormService } from 'src/app/_services/form.service';
 
 @Component({
   selector: 'app-add-form',
   templateUrl: './add-form.component.html',
-  styleUrls: ['./add-form.component.css']
+  styleUrls: ['./add-form.component.css'],
 })
 export class AddFormComponent implements OnInit {
   @Input() role = '';
@@ -17,12 +24,16 @@ export class AddFormComponent implements OnInit {
   states: State[] = [];
   cities: City[] = [];
 
-  constructor(private fb: FormBuilder, private formService: FormService, private route: ActivatedRoute) { }
+  constructor(
+    private fb: FormBuilder,
+    private formService: FormService,
+    private dataService: DataService,
+    private route: ActivatedRoute
+  ) {}
 
   ApplicationForm!: FormGroup;
-   
+
   ngOnInit() {
-    
     this.ApplicationForm = this.fb.group({
       // FormId: [''],
       FullName: this.fb.group({
@@ -35,7 +46,7 @@ export class AddFormComponent implements OnInit {
         Building: [''],
         Area: [''],
         State: [''],
-        City: ['']
+        City: [''],
       }),
       Gender: ['male'],
       Skills: this.fb.array([]),
@@ -53,12 +64,28 @@ export class AddFormComponent implements OnInit {
         Marks: [0],
         Grade: [''],
         YearOfPassing: [0],
-      })
+      }),
     });
+
+    this.dataService.findStates().subscribe({
+      next: (res) => {
+        this.states = res;
+      },
+    });
+
     let formId = parseInt(this.route.snapshot.paramMap.get('formId') || '-1');
     if (formId != -1) {
       this.loadAPIData(formId);
     }
+
+    const stateControl = this.ApplicationForm.get('Address.State');
+    stateControl?.valueChanges.forEach((value: number) =>
+      this.dataService.findCityByID(value).subscribe({
+        next: (res) => {
+          this.cities = res;
+        },
+      })
+    );
   }
 
   get skills() {
@@ -71,6 +98,10 @@ export class AddFormComponent implements OnInit {
 
   get firstName() {
     return this.ApplicationForm.get('fullName.firstName');
+  }
+
+  get state() {
+    return this.ApplicationForm.get('Address.State');
   }
 
   onSubmit(x: Student) {
@@ -102,5 +133,4 @@ export class AddFormComponent implements OnInit {
       this.formService.getForm(formId)
     );
   }
-
 }
